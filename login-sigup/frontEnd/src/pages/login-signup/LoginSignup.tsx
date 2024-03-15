@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
-import './LoginSignup.css'
+import "./LoginSignup.css";
 import { useNavigate } from "react-router-dom";
-import LoginGoogle from "../loginGoogle";
-
-
+import LoginGoogle from "../../features/loginGoogle";
+import Input from "../../components/Input/Input";
 
 axios.defaults.withCredentials = true;
 
@@ -105,9 +104,8 @@ export const LoginSignup = () => {
         <div className="content">
           {action === "Sign in" && (
             <div className="input">
-              <span className="text">Name</span>
-              <input
-                className="text-input"
+              <Input
+                className="mt-8"
                 type="text"
                 name="name"
                 placeholder="Name"
@@ -119,9 +117,9 @@ export const LoginSignup = () => {
           )}
           <div className="input">
             <span className="text">Email</span>
-            <input
-              className="text-input"
-              type="text"
+            <Input
+              className="mt-2"
+              type="email"
               name="email"
               placeholder="Email"
               onChange={handleInputChange}
@@ -131,8 +129,7 @@ export const LoginSignup = () => {
           </div>
           <div className="input">
             <span className="text">Password</span>
-            <input
-              className="text-input"
+            <Input
               type="password"
               name="password"
               placeholder="Password"

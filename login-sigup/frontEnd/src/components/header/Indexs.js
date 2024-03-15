@@ -5,15 +5,15 @@ import { useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
+import Typography from "@mui/material/Typography/Typography";
+
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 
 export const Indexs = () => {
   const [auth, setAuth] = useState(false);
-  const [name, setName] = useState("");
-  const [message, setMessage] = useState("");
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,10 +27,8 @@ export const Indexs = () => {
       .then((res) => {
         if (res.data.Status === "Success") {
           setAuth(true);
-          setName(res.data.name);
         } else {
           setAuth(false);
-          setMessage(res.data.Message);
         }
       })
       .catch((err) => console.log(err));
@@ -41,6 +39,8 @@ export const Indexs = () => {
       .get("http://localhost:8088/logout")
       .then((res) => {
         if (res.data.Status === "Success") {
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
           navigate("/login", { replace: true });
         } else {
           alert("error");
@@ -56,7 +56,7 @@ export const Indexs = () => {
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+        <AppBar>
           <Toolbar>
             <IconButton
               size="large"
@@ -71,19 +71,13 @@ export const Indexs = () => {
               News
             </Typography>
             {auth ? (
-              <div className="summit-container">
-                <h3>Đã xác nhận: {name}</h3>
-                <Button color="inherit" onClick={handleLogout}>
-                  Đăng xuất
-                </Button>
-              </div>
+              <Button color="inherit" onClick={handleLogout}>
+                Đăng xuất
+              </Button>
             ) : (
-              <div className="summit-container">
-                <h3>Chưa xác nhận: {message}</h3>
-                <Button color="inherit" onClick={handleLogin}>
-                  Đăng nhập
-                </Button>
-              </div>
+              <Button color="inherit" onClick={handleLogin}>
+                Đăng nhập
+              </Button>
             )}
           </Toolbar>
         </AppBar>
